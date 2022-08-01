@@ -39,7 +39,18 @@ RSpec.describe User, type: :model do
   end
 
   describe ".authenticate_with_credentials" do
-    
+    it "Should return an instance of the user object if the email and password are correct" do
+      @user = User.create(first_name: "Jesse", last_name: "Kopala", email: "test2@test.com", password: "tester2", password_confirmation: "tester2")
+      expect(@user).to be_valid
+      auth = User.authenticate_with_credentials(@user.email, "tester2")
+      expect(auth).to eq(@user)
+    end
+    it "Should return nil if the email is not in the user database" do
+      @user = User.create(first_name: "Jesse", last_name: "Kopala", email: "test2@test.com", password: "tester2", password_confirmation: "tester2")
+      expect(@user).to be_valid
+      auth = User.authenticate_with_credentials(@user.email, "test")
+      expect(auth).to eq(nil)
+    end
   end
 
 end
