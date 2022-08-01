@@ -64,6 +64,12 @@ RSpec.describe User, type: :model do
       expect(auth).to eq(@user)
       auth2 = User.authenticate_with_credentials("tEst2@teSt.COM", "tester2")
       expect(auth2).to eq(@user)
+      @user2 = User.create(first_name: "Jesse", last_name: "Kopala", email: "TEST@TEST.COM", password: "tester2", password_confirmation: "tester2")
+      expect(@user2).to be_valid
+      auth3 = User.authenticate_with_credentials("TEST@test.com", "tester2")
+      expect(auth3).to eq(@user2)
+      auth4 = User.authenticate_with_credentials("tEst@teSt.COM", "tester2")
+      expect(auth4).to eq(@user2)
     end
   end
 
